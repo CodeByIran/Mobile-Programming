@@ -1,0 +1,7 @@
+{
+  "name": "event-planner",
+  "slug": "event-planner",
+  "plugins": [
+    "expo-router"
+  ]
+}
