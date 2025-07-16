@@ -15,9 +15,10 @@ export default function Cadastro() {
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text style={styles.link}>Já tem conta? Voltar ao login</Text>
+      <TouchableOpacity onPress={() => router.push('/login')}>
+      <Text style={styles.link}>Já tem conta? Faça login</Text>
       </TouchableOpacity>
+
     </View>
   );
 }

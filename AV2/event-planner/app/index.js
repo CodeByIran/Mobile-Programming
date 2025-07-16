@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image, Button, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Image, Button, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function Home() {
@@ -6,8 +6,11 @@ export default function Home() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+
       <View style={styles.header}>
-        <View style={styles.avatar} />
+        <TouchableOpacity onPress={() => router.push('/perfil')}>
+          <View style={styles.avatar} />
+        </TouchableOpacity>
         <Text style={styles.userText}>Olá, Usuário!</Text>
       </View>
 
@@ -15,6 +18,7 @@ export default function Home() {
         <TextInput style={styles.searchInput} placeholder="Pesquisar eventos..." />
         <Button title="Filtro" onPress={() => router.push('/configuracoes')} />
       </View>
+
 
       <View style={styles.categories}>
         <View style={styles.category}>

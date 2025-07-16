@@ -10,9 +10,9 @@ export default function Login() {
       <TextInput placeholder="Email" style={styles.input} />
       <TextInput placeholder="Senha" style={styles.input} secureTextEntry />
       
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/')}>
-        <Text style={styles.buttonText}>Fazer Login</Text>
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => router.replace('/')}>
+  <Text style={styles.buttonText}>Fazer Login</Text>
+</TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push('/cadastro')}>
         <Text style={styles.link}>Não tem conta? Cadastre-se</Text>
