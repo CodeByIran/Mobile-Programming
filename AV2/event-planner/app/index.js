@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Image, Button, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function Home() {
@@ -6,7 +6,6 @@ export default function Home() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.push('/perfil')}>
           <View style={styles.avatar} />
@@ -14,48 +13,49 @@ export default function Home() {
         <Text style={styles.userText}>Olá, Usuário!</Text>
       </View>
 
-      <View style={styles.searchContainer}>
-        <TextInput style={styles.searchInput} placeholder="Pesquisar eventos..." />
-        <Button title="Filtro" onPress={() => router.push('/configuracoes')} />
-      </View>
-
-
-      <View style={styles.categories}>
-        <View style={styles.category}>
-          <Image source={{ uri: 'https://img.icons8.com/emoji/48/birthday-cake.png' }} style={styles.categoryIcon} />
-          <Text>Aniversário</Text>
-        </View>
-        <View style={styles.category}>
-          <Image source={{ uri: 'https://img.icons8.com/emoji/48/trophy.png' }} style={styles.categoryIcon} />
-          <Text>Festivais</Text>
-        </View>
-        <View style={styles.category}>
-          <Image source={{ uri: 'https://img.icons8.com/emoji/48/microphone.png' }} style={styles.categoryIcon} />
-          <Text>Show</Text>
-        </View>
-      </View>
-
       <Text style={styles.sectionTitle}>Eventos em Destaque</Text>
 
-      <View style={styles.eventCard}>
+      <TouchableOpacity style={styles.eventCard} onPress={() => router.push('/detalhesEvento')}>
         <Image source={{ uri: 'https://via.placeholder.com/80' }} style={styles.eventImage} />
         <View>
           <Text><Text style={styles.bold}>Nome:</Text> Empreendedorismo</Text>
           <Text><Text style={styles.bold}>Local:</Text> Clube Devil</Text>
           <Text><Text style={styles.bold}>Data:</Text> 24/11/2024</Text>
-          <Text><Text style={styles.bold}>Orçamento:</Text> Indefinido</Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={styles.eventCard}>
+      <TouchableOpacity style={styles.eventCard} onPress={() => router.push('/detalhesEvento')}>
         <Image source={{ uri: 'https://via.placeholder.com/80' }} style={styles.eventImage} />
         <View>
           <Text><Text style={styles.bold}>Nome:</Text> Nenhum</Text>
           <Text><Text style={styles.bold}>Local:</Text> Indefinido</Text>
           <Text><Text style={styles.bold}>Data:</Text> 24/11/2024</Text>
-          <Text><Text style={styles.bold}>Orçamento:</Text> Indefinido</Text>
         </View>
-      </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/eventos')}>
+        <Text style={styles.buttonText}>Ver Todos os Eventos</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.sectionTitle}>Navegar para:</Text>
+
+      {[
+        { label: 'Perfil', route: '/perfil' },
+        { label: 'Eventos', route: '/eventos' },
+        { label: 'Convites', route: '/convites' },
+        { label: 'Mapa', route: '/mapa' },
+        { label: 'Configurações', route: '/configuracoes' },
+        { label: 'Favoritos', route: '/favoritos' },
+        { label: 'Ajuda', route: '/ajuda' },
+      ].map((item, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.navButton}
+          onPress={() => router.push(item.route)}
+        >
+          <Text style={styles.navButtonText}>{item.label}</Text>
+        </TouchableOpacity>
+      ))}
     </ScrollView>
   );
 }
@@ -65,13 +65,27 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
   avatar: { width: 50, height: 50, borderRadius: 25, backgroundColor: '#476482', marginRight: 10 },
   userText: { fontSize: 18, fontWeight: 'bold' },
-  searchContainer: { flexDirection: 'row', gap: 10, marginBottom: 20 },
-  searchInput: { flex: 1, backgroundColor: '#fff', padding: 10, borderRadius: 10 },
-  categories: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
-  category: { alignItems: 'center' },
-  categoryIcon: { width: 50, height: 50 },
-  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
-  eventCard: { flexDirection: 'row', gap: 10, backgroundColor: '#fff', padding: 10, borderRadius: 10, marginBottom: 15 },
+  sectionTitle: { fontSize: 20, fontWeight: 'bold', marginVertical: 15 },
+  eventCard: {
+    flexDirection: 'row',
+    gap: 10,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
   eventImage: { width: 80, height: 80, borderRadius: 5 },
   bold: { fontWeight: 'bold' },
+  navButton: {
+    backgroundColor: '#476482',
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  navButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
