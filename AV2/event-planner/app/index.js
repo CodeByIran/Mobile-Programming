@@ -2,7 +2,7 @@ import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, TextInput 
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
+import { auth } from "../firebaseConfig";
 
 export default function Home() {
   const router = useRouter();

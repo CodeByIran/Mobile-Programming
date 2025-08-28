@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: "1:905885008739:web:255f9ad9a97f645f700956"
 };
 
-//inicializandp o  Firebase
+//inicializandp o  wFirebase
 const app = initializeApp(firebaseConfig);
 
 //exportando a autenticação
