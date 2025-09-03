@@ -41,15 +41,24 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  async function handleLogin() {
+ // Se usuário já estiver logado, vai direto para Home
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) router.replace("/index");
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = async () => {
     try {
-      const userCredential = await login(email, password);
-      Alert.alert("Bem-vindo", `Logado como ${userCredential.user.email}`);
-      router.push("/home"); // depois do login vai para a Home
-    } catch (error) {
-      Alert.alert("Erro", error.message);
+      await signInWithEmailAndPassword(auth, email, senha);
+      router.replace("/index"); // redireciona para Home
+    } catch (err) {
+      setError("Email ou senha incorretos");
+      console.log(err);
     }
-  }
+  };
+
 
   return (
     <View style={styles.container}>

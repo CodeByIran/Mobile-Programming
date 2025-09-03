@@ -1,25 +1,14 @@
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { useState } from 'react';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { auth } from "../firebaseConfig";
 
 export default function Home() {
   const router = useRouter();
-  const [email, setEmail] = useState('glauber.ferreira@ifal.edu.br');
-  const [senha, setSenha] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-      const user = userCredential.user;
-      console.log("Usuário logado:", user.email);
-      alert("Login realizado com sucesso!");
-      router.push('/perfil'); //vai redireciona apos login
-    } catch (error) {
-      console.error("Erro no login:", error.code, error.message);
-      alert("Erro: " + error.message);
-    }
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.replace("/login"); // volta para login
   };
 
   return (
@@ -28,33 +17,8 @@ export default function Home() {
         <TouchableOpacity onPress={() => router.push('/perfil')}>
           <View style={styles.avatar} />
         </TouchableOpacity>
-        <Text style={styles.userText}>Olá, Usuário!</Text>
+        <Text style={styles.userText}>Olá!</Text>
       </View>
-
-      {/* --- Login ---  */}
-      <Text style={styles.sectionTitle}>Login</Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        value={senha}
-        onChangeText={setSenha}
-        secureTextEntry
-      />
-
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Entrar</Text>
-      </TouchableOpacity>
-      {/* --- Fim do Login ---  */}
 
       <Text style={styles.sectionTitle}>Eventos em Destaque</Text>
 
@@ -99,6 +63,10 @@ export default function Home() {
           <Text style={styles.navButtonText}>{item.label}</Text>
         </TouchableOpacity>
       ))}
+
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <Text style={styles.buttonText}>Sair</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -109,14 +77,6 @@ const styles = StyleSheet.create({
   avatar: { width: 50, height: 50, borderRadius: 25, backgroundColor: '#476482', marginRight: 10 },
   userText: { fontSize: 18, fontWeight: 'bold' },
   sectionTitle: { fontSize: 20, fontWeight: 'bold', marginVertical: 15 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
   eventCard: {
     flexDirection: 'row',
     gap: 10,
@@ -135,10 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  navButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-  },
+  navButtonText: { color: '#fff', fontWeight: 'bold' },
   button: {
     backgroundColor: '#476482',
     padding: 15,

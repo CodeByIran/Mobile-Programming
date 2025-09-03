@@ -32,6 +32,8 @@
 //   link: { marginTop: 10, textAlign: 'center', color: '#476482' },
 // });
 
+
+
 import { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
 import { register } from "../services/auth";
