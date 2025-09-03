@@ -1,6 +1,6 @@
 // services/auth.js
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebaseConfig"; // ajuste o caminho se necessário
+import { auth } from "../firebaseConfig"; // ajuste o caminho se necessário
 
 // Cadastro
 export async function register(email, password) {

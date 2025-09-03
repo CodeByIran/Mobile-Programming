@@ -1,4 +1,6 @@
 {
+  
+  "scheme": "meuapp",
   "name": "event-planner",
   "slug": "event-planner",
   "plugins": [
