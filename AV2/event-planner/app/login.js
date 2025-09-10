@@ -31,7 +31,7 @@
 // });
 
 import { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { auth } from "../firebaseConfig";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -44,7 +44,7 @@ export default function LoginScreen() {
   // Se usuário já estiver logado, vai direto para Home
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) router.replace("/index");
+      if (user) router.replace("/");
     });
     return () => unsubscribe();
   }, []);
@@ -52,7 +52,7 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.replace("/index"); // redireciona para Home
+      router.replace("/"); // redireciona para Home
     } catch (err) {
       Alert.alert("Erro", "Email ou senha incorretos");
       console.log(err);
@@ -77,6 +77,11 @@ export default function LoginScreen() {
       />
       <Button title="Entrar" onPress={handleLogin} />
       <Button title="Não tem conta? Cadastre-se" onPress={() => router.push("/cadastro")} />
+    
+      <TouchableOpacity onPress={() => router.push("/forgotPassword")}>
+        <Text style={styles.link}>Esqueci minha senha</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
