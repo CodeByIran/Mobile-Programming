@@ -36,8 +36,9 @@
 
 import { useState } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
-import { register } from "../services/auth";
 import { useRouter } from "expo-router";
+import { auth } from "../firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function CadastroScreen() {
   const [email, setEmail] = useState("");
@@ -45,8 +46,13 @@ export default function CadastroScreen() {
   const router = useRouter();
 
   async function handleRegister() {
+    if (password.length < 6) {
+      Alert.alert("Erro", "A senha deve ter pelo menos 6 caracteres");
+      return;
+    }
+
     try {
-      await register(email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
       Alert.alert("Sucesso", "Cadastro realizado!");
       router.push("/login"); // depois do cadastro, vai pra login
     } catch (error) {
@@ -81,3 +87,4 @@ const styles = StyleSheet.create({
   title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
   input: { borderWidth: 1, padding: 10, marginBottom: 15, borderRadius: 5 },
 });
+

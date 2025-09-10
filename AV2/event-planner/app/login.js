@@ -30,18 +30,18 @@
 //   link: { marginTop: 10, textAlign: 'center', color: '#476482' },
 // });
 
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
-import { login } from "../services/auth";
 import { useRouter } from "expo-router";
+import { auth } from "../firebaseConfig";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
- // Se usuário já estiver logado, vai direto para Home
+  // Se usuário já estiver logado, vai direto para Home
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) router.replace("/index");
@@ -51,14 +51,13 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, senha);
+      await signInWithEmailAndPassword(auth, email, password);
       router.replace("/index"); // redireciona para Home
     } catch (err) {
-      setError("Email ou senha incorretos");
+      Alert.alert("Erro", "Email ou senha incorretos");
       console.log(err);
     }
   };
-
 
   return (
     <View style={styles.container}>
